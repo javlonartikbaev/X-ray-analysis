@@ -1,0 +1,9 @@
+.venv
+.idea
+frontend/
+templates
+db.sqlite3
+migrations/
+.env
+
+
