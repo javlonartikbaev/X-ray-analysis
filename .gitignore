@@ -7,3 +7,4 @@ migrations/
 .env
 
 
+/ai_model/mura_fracture_model_best.pth
