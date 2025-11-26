@@ -20,8 +20,16 @@ class ClientListAPI(APIView):
         date_of_birth = serializers.DateField()
         gender = serializers.CharField()
 
+    class ClientFilterSerializer(serializers.Serializer):
+        full_name = serializers.CharField(required=False)
+        passport_seria = serializers.CharField(required=False)
+        passport_pinfl = serializers.CharField(required=False)
+        gender = serializers.ChoiceField(required=False, choices=Client.Gender.choices)
+
     def get(self, request):
-        clients = get_clients()
+        filter_serializer = self.ClientFilterSerializer(data=request.query_params)
+        filter_serializer.is_valid(raise_exception=True)
+        clients = get_clients(filters=filter_serializer.validated_data)
         data = self.OutputSerializer(clients, many=True).data
         return Response(data, status=status.HTTP_200_OK)
 

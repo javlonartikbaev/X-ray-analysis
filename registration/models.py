@@ -17,3 +17,7 @@ class Client(models.Model):
     class Meta:
         db_table = 'client'
         verbose_name_plural = 'Clients'
+        ordering = ['-id']
+
+    def __str__(self):
+        return self.full_name

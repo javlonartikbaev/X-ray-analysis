@@ -2,12 +2,14 @@ from logging import raiseExceptions
 
 from django.shortcuts import get_object_or_404
 
+from .filters import ClientFilter
 from .models import Client
 
 
-def get_clients():
+def get_clients(*, filters=None):
+    filters = filters or {}
     clients = Client.objects.all()
-    return clients
+    return ClientFilter(filters, queryset=clients).qs
 
 
 def get_client(client_id):
