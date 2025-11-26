@@ -6,7 +6,7 @@ from PIL import Image
 def analysis(img_path):
     model = models.resnet50(weights=None)
     model.fc = torch.nn.Linear(model.fc.in_features, 2)
-    checkpoint = torch.load("mura_fracture_model_best.pth", map_location="cpu")
+    checkpoint = torch.load("ai_model/mura_fracture_model_best.pth", map_location="cpu")
     state_dict = checkpoint["model_state_dict"]
 
     new_state_dict = {k.replace("backbone.", ""): v for k, v in state_dict.items()}
@@ -27,5 +27,5 @@ def analysis(img_path):
         outputs = model(img)
         _, predicted = torch.max(outputs, 1)
 
-    labels = ["Normal", "Fracture"]
+    labels = ["Нормально", "Перелом"]
     return labels[predicted.item()]
